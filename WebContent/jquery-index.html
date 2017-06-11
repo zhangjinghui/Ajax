@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="scripts/jquery-2.2.4.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("a").click(function() {
+			var url = this.href;
+			var args = {
+				"time" : new Date()
+			};
+			$.get(url, args, function(data) {
+				alert(data);
+			});
+			return false;
+		})
+	})
+</script>
+</head>
+<body>
+
+	<a href="helloajax.txt">Hello Ajax!</a>
+
+</body>
+</html>

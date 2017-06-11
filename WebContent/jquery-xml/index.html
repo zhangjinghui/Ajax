@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>People at Clearleft</title>
+<style type="text/css">
+@import url("clearleft.css");
+</style>
+<script type="text/javascript" src="../scripts/jquery-2.2.4.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("a").click(function(){
+			var url = this.href;
+			var args = {"time":new Date()};
+			$.get(url,args,function(data){
+				var nameVal = $(data).find("name").text();
+				var emailVal = $(data).find("email").text();
+				var websiteVal = $(data).find("website").text();
+				
+				$("#details").empty().append("<h2><a href='mailto:"+ emailVal +"'>"+ nameVal +"</a></h2>")
+							 .append("<a href='"+ websiteVal +"'>"+ websiteVal +"</a>");
+			})
+			return false;
+		})
+	})
+</script>
+</head>
+<body>
+	<h1>People</h1>
+	<ul>
+		<li><a href="files/andy.xml">Andy</a></li>
+		<li><a href="files/richard.xml">Richard</a></li>
+		<li><a href="files/jeremy.xml">Jeremy</a></li>
+	</ul>
+	<div id="details"></div>
+</body>
+</html>

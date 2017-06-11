@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function() {
+		// 1. 获取 a 节点，并为其添加 onclick 响应函数
+		var a = document.getElementsByTagName("a")[0].onclick = function() {
+
+			// 3. 创建一个 XMLHttpRequest 对象
+			var xhr = new XMLHttpRequest();
+			
+			// 4. 准备发送请求数据 url，并添加时间戳，避免缓存
+			var url = this.href + "?time=" + new Date();
+			var method = "get";
+				
+			
+			// 5. 调用 XMLHttpRequest 对象的 open()方法
+			xhr.open(method, url);
+			// 6. 调用 XMLHttpRequest 对象的 send()方法
+			xhr.send(null);
+			
+			// post 测试
+// 			xhr.open("post", url);
+// 			xhr.setRequestHeader("contentType","application/x-www-form-urlencoded");
+// 			xhr.send("name='aaa'");
+
+
+			// 7. 为 XMLHttpReuqest 对象添加 onreadystatechange 响应函数
+			xhr.onreadystatechange = function() {
+			// 8. 判断响应是否完成：XMLHttpRequest 对象的 readyState 值为 4 时
+				if (xhr.readyState == 4) {
+					// 9. 再判断响应是否可用：XMLHttpRequest 对象 status 值为 200 或 304 时
+					if (xhr.status == 200 || xhr.status == 304) {
+						// 10. 打印响应结果 reponseText
+						alert(xhr.responseText);
+					}
+				}
+			}
+
+			// 2. 取消 a 节点的默认行为
+			return false;
+		}
+	}
+</script>
+</head>
+<body>
+
+	<a href="helloajax.txt">Hello Ajax!</a>
+
+</body>
+</html>

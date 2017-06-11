@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var jsonObject = {
+			"name":"zhangjinghui",
+			"age":21,
+			"address":{"province":"HeiLongJiang", "city":"Harbin"},
+			"speak":function(){
+				alert("speak function...");	
+			}
+		};
+		
+		alert(jsonObject.name);
+		alert(jsonObject.address.city);
+		jsonObject.speak();
+
+		// 使用 eval()方法将字符串转为本地 js 代码执行
+		var testStr = "alert('eval() 字符串转本地js代码')";
+		eval(testStr);
+		
+		// 把字符串转为 json 对象
+		
+		var jsonStr = "{'name':'字符串转 json对象'}";
+		var testJsonObject = eval("(" + jsonStr + ")");//两边加括号
+		alert(testJsonObject.name);
+	}
+</script>
+</head>
+<body>
+
+
+</body>
+</html>

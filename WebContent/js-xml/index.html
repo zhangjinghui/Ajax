@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>People at Clearleft</title>
+<style type="text/css">
+@import url("clearleft.css");
+</style>
+<script type="text/javascript">
+	window.onload = function() {
+		var a = document.getElementsByTagName("a");
+		for ( var i = 0; i < a.length; i++) {
+			a[i].onclick = function() {
+				var url = this.href;
+				var method = "get";
+
+				var xhr = new XMLHttpRequest();
+				xhr.open(method, url);
+				xhr.send(null);
+
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4) {
+						if (xhr.status == 200 || xhr.status == 304) {
+							// 1. 结果为 XML 格式，需要使用 responseXML 来获取
+							var result = xhr.responseXML;
+
+							// 2. 结果不能直接使用，必须先创建对应节点，再把节点放入 #details 中
+							// 目标格式如下：
+							/*
+								<h2><a href="mailto:andy@clearleft.com">Andy Budd</a></h2>
+								<a href="http://andybudd.com/">http://andybudd.com/</a>
+							 */
+							var nameVal = result.getElementsByTagName("name")[0].firstChild.nodeValue;
+							var emailVal = result.getElementsByTagName("email")[0].firstChild.nodeValue;
+							var websiteVal = result
+									.getElementsByTagName("website")[0].firstChild.nodeValue;
+
+							var aNode = document.createElement("a");
+							aNode.appendChild(document.createTextNode(nameVal));
+							aNode.href = "mailto:" + emailVal;
+
+							var h2Node = document.createElement("h2");
+							h2Node.appendChild(aNode);
+
+							var aNode2 = document.createElement("a");
+							aNode2.appendChild(document
+									.createTextNode(websiteVal));
+							aNode2.href = websiteVal;
+
+							var details = document.getElementById("details");
+							details.innerHTML = "";
+							details.appendChild(h2Node);
+							details.appendChild(aNode2);
+						}
+					}
+				};
+
+				return false;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>People</h1>
+	<ul>
+		<li><a href="files/andy.xml">Andy</a></li>
+		<li><a href="files/richard.xml">Richard</a></li>
+		<li><a href="files/jeremy.xml">Jeremy</a></li>
+	</ul>
+	<div id="details"></div>
+</body>
+</html>
